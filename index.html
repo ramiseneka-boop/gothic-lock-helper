@@ -1,349 +1,58 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b0f14">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Gothic Lock">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-  <title>Gothic Lock Helper</title>
-  <style>
-    :root{
-      --bg:#0b0f14;--panel:#151b24;--panel2:#202938;--line:#354155;
-      --text:#f6f8fb;--muted:#a9b3c1;--green:#39d39f;--red:#ff746d;
-      --yellow:#ffd166;--blue:#6ea8fe;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#080b0f,#111927);color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-    .app{max-width:820px;margin:auto;padding:16px 14px 80px}
-    h1{font-size:28px;margin:8px 0 4px}
-    .lead{color:var(--muted);line-height:1.45;margin:0 0 14px}
-    .card{background:rgba(21,27,36,.97);border:1px solid var(--line);border-radius:18px;
-      padding:16px;margin:12px 0;box-shadow:0 12px 32px rgba(0,0,0,.25)}
-    .title{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:850}
-    .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
-      background:var(--blue);color:#07101c;font-weight:900;flex:0 0 auto}
-    .note{font-size:14px;color:var(--muted);line-height:1.45}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    label{font-weight:750}
-    select,input{background:var(--panel2);border:1px solid var(--line);color:var(--text);
-      border-radius:11px;padding:10px 12px;font-size:16px}
-    button{font:inherit;cursor:pointer}
-    .grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-    .plate{padding:14px 0;border-top:1px solid var(--line)}
-    .plate:first-child{border-top:0}
-    .plate-name{font-weight:850;margin-bottom:8px}
-    .choice,.effect,.secondary{border:1px solid var(--line);background:var(--panel2);
-      color:var(--text);border-radius:11px;padding:11px 5px;font-weight:750}
-    .choice.active{background:var(--green);border-color:var(--green);color:#06150f}
-    .target.active{background:var(--yellow);border-color:var(--yellow);color:#241b00}
-    .warn{padding:12px;border-radius:12px;background:rgba(255,209,102,.11);
-      border:1px solid rgba(255,209,102,.42);color:#ffe8ab;line-height:1.45}
-    .tests{margin-top:8px}
-    .test{padding:15px 0;border-top:1px solid var(--line)}
-    .test:first-child{border-top:0}
-    .testhead{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .effects{display:grid;gap:7px;margin-top:9px}
-    .effect{min-height:69px;font-size:12px;display:flex;flex-direction:column;
-      justify-content:center;align-items:center;gap:4px}
-    .effect .sym{font-size:24px}
-    .effect.none{color:var(--muted)}
-    .effect.same{background:rgba(57,211,159,.16);border-color:var(--green);color:#b8f4df}
-    .effect.opp{background:rgba(255,116,109,.16);border-color:var(--red);color:#ffc3bf}
-    .effect.self{opacity:.55;border-style:dashed}
-    .legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:10px}
-    .primary{width:100%;padding:15px;border:1px solid var(--green);border-radius:12px;
-      background:var(--green);color:#06140f;font-size:18px;font-weight:850}
-    .secondary{width:100%;margin-top:8px}
-    #result{display:none}
-    #result.show{display:block}
-    .ok,.err{padding:12px;border-radius:12px;line-height:1.45}
-    .ok{background:rgba(57,211,159,.12);border:1px solid rgba(57,211,159,.4);color:#c9f8e9}
-    .err{background:rgba(255,116,109,.12);border:1px solid rgba(255,116,109,.4);color:#ffd0cd}
-    .move{margin-top:9px;padding:13px;border:1px solid var(--line);border-radius:12px;
-      background:var(--panel2);font-size:18px}
-    .move b{color:var(--green)}
-    .install{display:none;margin-top:8px;width:100%;padding:13px;border-radius:12px;
-      border:1px solid var(--blue);background:transparent;color:var(--blue);font-weight:800}
-    .tiny{font-size:12px;color:var(--muted)}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gothic Lock">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Gothic Lock Helper</title>
+<style>
+:root{--bg:#0b0f14;--panel:#151b24;--panel2:#202938;--line:#354155;--text:#f6f8fb;--muted:#a9b3c1;--green:#39d39f;--red:#ff746d;--yellow:#ffd166;--blue:#6ea8fe}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#080b0f,#111927);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.app{max-width:820px;margin:auto;padding:16px 14px 80px}h1{font-size:28px;margin:8px 0 4px}.lead,.note{color:var(--muted);line-height:1.45}
+.card{background:rgba(21,27,36,.97);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 12px 32px rgba(0,0,0,.25)}
+.title{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:850}.num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#07101c;font-weight:900}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:11px;padding:10px 12px;font-size:16px}
+.grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.plate{padding:14px 0;border-top:1px solid var(--line)}.plate:first-child{border-top:0}.plate-name{font-weight:850;margin-bottom:8px}
+button{font:inherit;cursor:pointer}.choice,.secondary,.dirbtn,.statusbtn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:11px;padding:11px 6px;font-weight:750}
+.choice.active{background:var(--green);border-color:var(--green);color:#06150f}.target.active{background:var(--yellow);border-color:var(--yellow);color:#241b00}
+.warn{padding:12px;border-radius:12px;background:rgba(255,209,102,.11);border:1px solid rgba(255,209,102,.42);color:#ffe8ab;line-height:1.45}.danger{padding:12px;border-radius:12px;background:rgba(255,116,109,.11);border:1px solid rgba(255,116,109,.42);color:#ffd0cd;line-height:1.45}
+.primary{width:100%;padding:15px;border:1px solid var(--green);border-radius:12px;background:var(--green);color:#06140f;font-size:18px;font-weight:850}.secondary{width:100%;margin-top:8px}
+.cal{padding:14px 0;border-top:1px solid var(--line)}.cal:first-child{border-top:0}.calhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.tag{padding:6px 9px;border-radius:999px;font-size:12px;font-weight:800;background:var(--panel2);color:var(--muted)}.tag.ok{background:rgba(57,211,159,.15);color:#b8f4df}.tag.wait{background:rgba(255,209,102,.12);color:#ffe8ab}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}.dirbtn.active{background:var(--blue);color:#07101c;border-color:var(--blue)}.statusbtn.blocked{background:rgba(255,116,109,.15);border-color:var(--red)}.statusbtn.success{background:rgba(57,211,159,.15);border-color:var(--green)}
+.vector{margin-top:8px;color:var(--muted);font-size:13px}.hidden{display:none!important}
+#result{display:none}#result.show{display:block}.okbox,.errbox{padding:12px;border-radius:12px;line-height:1.45}.okbox{background:rgba(57,211,159,.12);border:1px solid rgba(57,211,159,.4);color:#c9f8e9}.errbox{background:rgba(255,116,109,.12);border:1px solid rgba(255,116,109,.4);color:#ffd0cd}
+.move{margin-top:9px;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);font-size:18px}.move b{color:var(--green)}
+.small{font-size:12px;color:var(--muted)}
+</style>
 </head>
 <body>
 <div class="app">
-  <h1>🔓 Gothic Lock Helper</h1>
-  <p class="lead">Работает с любым количеством плиток. Без таблицы Гаусса: ты только отмечаешь позиции и реакции.</p>
-
-  <section class="card">
-    <div class="title"><span class="num">1</span>Настройка замка</div>
-    <div class="row" style="margin-top:12px">
-      <label for="plateCount">Количество плиток:</label>
-      <select id="plateCount"></select>
-    </div>
-    <p class="note">Плитка №1 — первая в твоём порядке. Главное, чтобы ты использовал один и тот же порядок везде.</p>
-  </section>
-
-  <section class="card">
-    <div class="title"><span class="num">2</span>Текущие позиции</div>
-    <p class="note">Для каждой плитки выбери отверстие, где сейчас находится её штифт.</p>
-    <div id="positions"></div>
-    <div class="plate">
-      <div class="plate-name">Целевое отверстие для всех штифтов</div>
-      <div class="grid7" id="target"></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="title"><span class="num">3</span>Проверка связей</div>
-    <div class="warn">
-      Для каждого теста сдвинь выбранную плитку ровно на один щелчок в рабочую сторону.
-      Затем отметь, что сделали остальные плитки. Перед следующим тестом верни замок в исходное положение.
-    </div>
-    <div id="tests" class="tests"></div>
-    <div class="legend">
-      <span>● не двигалась</span><span>→ в ту же сторону</span><span>← в противоположную</span>
-    </div>
-  </section>
-
-  <section class="card">
-    <button id="solveBtn" class="primary">Рассчитать решение</button>
-    <button id="resetBtn" class="secondary">Сбросить всё</button>
-    <button id="installBtn" class="install">Установить как приложение</button>
-    <p class="tiny">Для установки PWA открой опубликованную версию сайта через Safari/Chrome по HTTPS.</p>
-  </section>
-
-  <section class="card" id="result">
-    <div class="title"><span class="num">4</span>Что нажимать</div>
-    <div id="resultText"></div>
-    <div id="moves"></div>
-  </section>
+<h1>🔓 Gothic Lock Helper</h1>
+<p class="lead">Правильная версия: приложение не угадывает направление. Ты записываешь один успешный ход каждой плитки, а оно само вычисляет связи и ищет безопасную последовательность без выхода штифтов за край.</p>
+<section class="card"><div class="title"><span class="num">1</span>Настройка</div><div class="row" style="margin-top:12px"><label>Количество плиток:</label><select id="plateCount"></select></div><p class="note">Поддерживается от 2 до 10 плиток. Отверстия нумеруются 1–7.</p></section>
+<section class="card"><div class="title"><span class="num">2</span>Текущее положение замка</div><p class="note">Выставь реальные позиции штифтов прямо сейчас.</p><div id="currentPositions"></div><div class="plate"><div class="plate-name">Целевое отверстие</div><div class="grid7" id="target"></div></div></section>
+<section class="card"><div class="title"><span class="num">3</span>Калибровка каждой плитки</div><div class="danger"><b>Не проверяй ход вслепую без сохранения.</b> Сохрани игру перед тестом. Если движение заблокировано — загрузи сохранение. Приложение не считает заблокированный ход связью.</div><p class="note">Для каждой плитки нужен хотя бы один <b>успешный</b> ход. Перед тестом выставь состояние «до», выбери направление, сделай один ход в игре и выставь состояние «после». Программа сама вычислит, какие плитки и на сколько сдвинулись.</p><div id="calibrations"></div></section>
+<section class="card"><button id="solveBtn" class="primary">Найти безопасное решение</button><button id="resetBtn" class="secondary">Сбросить всё</button><p class="small">Решение строится только после успешной калибровки всех плиток.</p></section>
+<section class="card" id="result"><div class="title"><span class="num">4</span>Что нажимать</div><div id="resultText"></div><div id="moves"></div></section>
 </div>
-
 <script>
-(() => {
-  'use strict';
-  const MOD = 7;
-  let n = 5;
-  let positions = [];
-  let target = 4;
-  let dirs = [];
-  let effects = [];
-  let deferredPrompt = null;
-
-  const $ = id => document.getElementById(id);
-  const mod = x => ((x % MOD) + MOD) % MOD;
-  const inv7 = a => {
-    a = mod(a);
-    for (let x = 1; x < MOD; x++) if (mod(a * x) === 1) return x;
-    return null;
-  };
-
-  function initState(count) {
-    n = count;
-    positions = Array(n).fill(1);
-    dirs = Array(n).fill('L');
-    effects = Array.from({length:n}, (_,j) =>
-      Array.from({length:n}, (_,i) => i === j ? 1 : 0)
-    );
-    renderAll();
-  }
-
-  function renderCount() {
-    const s = $('plateCount');
-    s.innerHTML = '';
-    for (let c = 2; c <= 12; c++) {
-      const o = document.createElement('option');
-      o.value = c; o.textContent = c;
-      if (c === n) o.selected = true;
-      s.appendChild(o);
-    }
-  }
-
-  function renderPositions() {
-    const root = $('positions'); root.innerHTML = '';
-    for (let p = 0; p < n; p++) {
-      const block = document.createElement('div');
-      block.className = 'plate';
-      block.innerHTML = `<div class="plate-name">Плитка ${p+1}</div><div class="grid7"></div>`;
-      const grid = block.querySelector('.grid7');
-      for (let v = 1; v <= 7; v++) {
-        const b = document.createElement('button');
-        b.className = 'choice' + (positions[p] === v ? ' active' : '');
-        b.textContent = v;
-        b.onclick = () => { positions[p] = v; renderPositions(); };
-        grid.appendChild(b);
-      }
-      root.appendChild(block);
-    }
-  }
-
-  function renderTarget() {
-    const root = $('target'); root.innerHTML = '';
-    for (let v = 1; v <= 7; v++) {
-      const b = document.createElement('button');
-      b.className = 'choice target' + (target === v ? ' active' : '');
-      b.textContent = v;
-      b.onclick = () => { target = v; renderTarget(); };
-      root.appendChild(b);
-    }
-  }
-
-  function cycle(v) { return v === 0 ? 1 : (v === 1 ? -1 : 0); }
-
-  function renderTests() {
-    const root = $('tests'); root.innerHTML = '';
-    for (let j = 0; j < n; j++) {
-      const block = document.createElement('div');
-      block.className = 'test';
-
-      const head = document.createElement('div');
-      head.className = 'testhead';
-      head.innerHTML = `<div class="plate-name">Тест ${j+1}: двигаю плитку ${j+1}</div>`;
-      const sel = document.createElement('select');
-      sel.innerHTML = '<option value="L">← влево</option><option value="R">вправо →</option>';
-      sel.value = dirs[j];
-      sel.onchange = e => dirs[j] = e.target.value;
-      head.appendChild(sel);
-      block.appendChild(head);
-
-      const hint = document.createElement('div');
-      hint.className = 'note';
-      hint.textContent = 'Нажимай на карточки ниже: ● → ←';
-      block.appendChild(hint);
-
-      const grid = document.createElement('div');
-      grid.className = 'effects';
-      grid.style.gridTemplateColumns = `repeat(${Math.min(n,6)},1fr)`;
-
-      for (let i = 0; i < n; i++) {
-        const v = effects[j][i];
-        const b = document.createElement('button');
-        const state = v === 0 ? 'none' : (v === 1 ? 'same' : 'opp');
-        b.className = `effect ${state}${i===j?' self':''}`;
-        b.innerHTML = `<span>Плитка ${i+1}</span><span class="sym">${v===0?'●':v===1?'→':'←'}</span>`;
-        if (i !== j) b.onclick = () => { effects[j][i] = cycle(effects[j][i]); renderTests(); };
-        grid.appendChild(b);
-      }
-      block.appendChild(grid);
-      root.appendChild(block);
-    }
-  }
-
-  function renderAll() {
-    renderCount(); renderPositions(); renderTarget(); renderTests();
-    $('result').classList.remove('show');
-  }
-
-  // Решает A*x=b по модулю 7 методом Гаусса-Жордана.
-  function solveLinear(A, b) {
-    const rows = A.length, cols = A[0].length;
-    const M = A.map((r,i) => r.map(mod).concat([mod(b[i])]));
-    let r = 0;
-    const pivotCols = [];
-
-    for (let c = 0; c < cols && r < rows; c++) {
-      let pivot = r;
-      while (pivot < rows && mod(M[pivot][c]) === 0) pivot++;
-      if (pivot === rows) continue;
-
-      [M[r], M[pivot]] = [M[pivot], M[r]];
-      const inv = inv7(M[r][c]);
-      if (inv === null) continue;
-      for (let k = c; k <= cols; k++) M[r][k] = mod(M[r][k] * inv);
-
-      for (let i = 0; i < rows; i++) {
-        if (i === r) continue;
-        const f = mod(M[i][c]);
-        if (f !== 0) {
-          for (let k = c; k <= cols; k++) M[i][k] = mod(M[i][k] - f * M[r][k]);
-        }
-      }
-      pivotCols.push(c);
-      r++;
-    }
-
-    for (let i = 0; i < rows; i++) {
-      const allZero = M[i].slice(0, cols).every(v => mod(v) === 0);
-      if (allZero && mod(M[i][cols]) !== 0) return null;
-    }
-
-    const x = Array(cols).fill(0);
-    for (let i = 0; i < pivotCols.length; i++) x[pivotCols[i]] = mod(M[i][cols]);
-    return x;
-  }
-
-  function solve() {
-    const A = Array.from({length:n}, (_,i) =>
-      Array.from({length:n}, (_,j) => effects[j][i])
-    );
-    const b = positions.map(p => mod(target - p));
-    const solution = solveLinear(A, b);
-
-    const result = $('result'), text = $('resultText'), moves = $('moves');
-    result.classList.add('show'); moves.innerHTML = '';
-
-    if (!solution) {
-      text.innerHTML = '<div class="err"><b>Решение не найдено.</b><br>Проверь связи, направления тестов и целевое отверстие.</div>';
-      result.scrollIntoView({behavior:'smooth',block:'start'});
-      return;
-    }
-
-    let total = 0, any = false;
-    const commands = [];
-
-    solution.forEach((v,j) => {
-      if (v === 0) return;
-      any = true;
-      let count = v, dir = dirs[j];
-      if (v > 3) {
-        count = 7 - v;
-        dir = dir === 'L' ? 'R' : 'L';
-      }
-      total += count;
-      commands.push({plate:j+1,count,dir});
-    });
-
-    text.innerHTML = `<div class="ok">Решение найдено. Всего щелчков: <b>${total}</b>.</div>`;
-
-    commands.forEach(c => {
-      const word = c.dir === 'L' ? 'влево' : 'вправо';
-      const arrow = c.dir === 'L' ? '←' : '→';
-      const el = document.createElement('div');
-      el.className = 'move';
-      el.innerHTML = `Плитка <b>${c.plate}</b>: ${arrow} <b>${word} ${c.count} ${c.count===1?'раз':c.count<5?'раза':'раз'}</b>`;
-      moves.appendChild(el);
-    });
-
-    if (!any) moves.innerHTML = '<div class="move">Штифты уже выставлены правильно.</div>';
-    result.scrollIntoView({behavior:'smooth',block:'start'});
-  }
-
-  $('plateCount').addEventListener('change', e => initState(Number(e.target.value)));
-  $('solveBtn').addEventListener('click', solve);
-  $('resetBtn').addEventListener('click', () => initState(n));
-
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    $('installBtn').style.display = 'block';
-  });
-  $('installBtn').addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    $('installBtn').style.display = 'none';
-  });
-
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-  }
-
-  initState(5);
-})();
+(()=>{'use strict';const HOLES=7;let n=5,target=4,current=[],cal=[];const $=id=>document.getElementById(id),key=a=>a.join(','),clone=a=>a.slice();
+function init(count){n=count;current=Array(n).fill(4);cal=Array.from({length:n},()=>({dir:'L',before:Array(n).fill(4),after:Array(n).fill(4),saved:false,blocked:false,vector:null}));renderAll()}
+function renderCount(){const s=$('plateCount');s.innerHTML='';for(let i=2;i<=10;i++){const o=document.createElement('option');o.value=i;o.textContent=i;if(i===n)o.selected=true;s.appendChild(o)}}
+function positionPicker(values,onchange){const wrap=document.createElement('div');for(let p=0;p<n;p++){const b=document.createElement('div');b.className='plate';b.innerHTML=`<div class="plate-name">Плитка ${p+1}</div><div class="grid7"></div>`;const g=b.querySelector('.grid7');for(let v=1;v<=7;v++){const x=document.createElement('button');x.className='choice'+(values[p]===v?' active':'');x.textContent=v;x.onclick=()=>onchange(p,v);g.appendChild(x)}wrap.appendChild(b)}return wrap}
+function renderCurrent(){const r=$('currentPositions');r.innerHTML='';r.appendChild(positionPicker(current,(p,v)=>{current[p]=v;renderCurrent()}))}
+function renderTarget(){const r=$('target');r.innerHTML='';for(let v=1;v<=7;v++){const b=document.createElement('button');b.className='choice target'+(target===v?' active':'');b.textContent=v;b.onclick=()=>{target=v;renderTarget()};r.appendChild(b)}}
+function calcVector(c){if(!c.saved||c.blocked)return null;const raw=c.after.map((v,i)=>v-c.before[i]);if(raw.every(v=>v===0))return null;return c.dir==='R'?raw:raw.map(v=>-v)}
+function renderCal(){const root=$('calibrations');root.innerHTML='';cal.forEach((c,idx)=>{c.vector=calcVector(c);const box=document.createElement('div');box.className='cal';const status=c.vector?'<span class="tag ok">готово</span>':c.blocked?'<span class="tag wait">ход заблокирован</span>':'<span class="tag">не настроено</span>';box.innerHTML=`<div class="calhead"><div class="plate-name">Плитка ${idx+1}</div>${status}</div>`;const dirs=document.createElement('div');dirs.className='twocol';['L','R'].forEach(d=>{const b=document.createElement('button');b.className='dirbtn'+(c.dir===d?' active':'');b.textContent=d==='L'?'← тестировал влево':'тестировал вправо →';b.onclick=()=>{c.dir=d;c.blocked=false;c.saved=false;c.vector=null;renderCal()};dirs.appendChild(b)});box.appendChild(dirs);const sts=document.createElement('div');sts.className='twocol';sts.style.marginTop='8px';const blocked=document.createElement('button');blocked.className='statusbtn blocked';blocked.textContent='Ход не сдвинулся / заблокирован';blocked.onclick=()=>{c.blocked=true;c.saved=false;c.vector=null;renderCal()};const success=document.createElement('button');success.className='statusbtn success';success.textContent='Ход успешно сдвинулся';success.onclick=()=>{c.blocked=false;c.saved=true;renderCal()};sts.append(blocked,success);box.appendChild(sts);if(c.saved&&!c.blocked){const before=document.createElement('div');before.innerHTML='<div class="plate-name" style="margin-top:14px">Положение ДО хода</div>';before.appendChild(positionPicker(c.before,(p,v)=>{c.before[p]=v;renderCal()}));box.appendChild(before);const after=document.createElement('div');after.innerHTML='<div class="plate-name" style="margin-top:14px">Положение ПОСЛЕ одного хода</div>';after.appendChild(positionPicker(c.after,(p,v)=>{c.after[p]=v;renderCal()}));box.appendChild(after);const info=document.createElement('div');info.className='vector';info.textContent=c.vector?'Вычисленная реакция при движении вправо: '+c.vector.map((v,i)=>`П${i+1}:${v>0?'+':''}${v}`).join(' · '):'Пока позиции ДО и ПОСЛЕ одинаковые — связь не определена.';box.appendChild(info)}root.appendChild(box)})}
+function renderAll(){renderCount();renderCurrent();renderTarget();renderCal();$('result').classList.remove('show')}
+function validMove(state,plate,dir){const vec=cal[plate].vector;if(!vec)return null;const sign=dir==='R'?1:-1;const next=state.map((v,i)=>v+vec[i]*sign);if(next.some(v=>v<1||v>7))return null;if(next.every((v,i)=>v===state[i]))return null;return next}
+function solve(){const result=$('result'),text=$('resultText'),moves=$('moves');result.classList.add('show');moves.innerHTML='';const missing=cal.map((c,i)=>c.vector?null:i+1).filter(Boolean);if(missing.length){text.innerHTML=`<div class="errbox"><b>Не хватает успешной калибровки.</b><br>Плитки: ${missing.join(', ')}. Заблокированный тест не подходит — для этой плитки нужен успешный ход из другого положения.</div>`;result.scrollIntoView({behavior:'smooth'});return}const goal=Array(n).fill(target),start=clone(current);if(key(start)===key(goal)){text.innerHTML='<div class="okbox">Замок уже в целевом положении.</div>';return}const q=[start],seen=new Map([[key(start),null]]),action=new Map(),limit=250000;let head=0,found=null;while(head<q.length&&q.length<limit){const s=q[head++];outer:for(let p=0;p<n;p++)for(const d of ['L','R']){const nx=validMove(s,p,d);if(!nx)continue;const k=key(nx);if(seen.has(k))continue;seen.set(k,key(s));action.set(k,{p,d});if(k===key(goal)){found=k;break outer}q.push(nx)}if(found)break}if(!found){text.innerHTML='<div class="errbox"><b>Безопасный путь не найден.</b><br>Проверь позиции ДО/ПОСЛЕ, цель и текущие позиции.</div>';result.scrollIntoView({behavior:'smooth'});return}const path=[];let k=found;while(seen.get(k)!==null){path.push(action.get(k));k=seen.get(k)}path.reverse();text.innerHTML=`<div class="okbox">Найден безопасный путь: <b>${path.length}</b> ходов. Ни один рассчитанный ход не выводит штифт за отверстия 1–7.</div>`;path.forEach((a,i)=>{const e=document.createElement('div');e.className='move';e.innerHTML=`${i+1}. Плитка <b>${a.p+1}</b> ${a.d==='L'?'← влево':'вправо →'}`;moves.appendChild(e)});result.scrollIntoView({behavior:'smooth'})}
+$('plateCount').addEventListener('change',e=>init(Number(e.target.value)));$('solveBtn').addEventListener('click',solve);$('resetBtn').addEventListener('click',()=>init(n));if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));init(5)})();
 </script>
 </body>
 </html>
